@@ -1,5 +1,5 @@
 import React, { useState, ReactNode } from "react";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu } from "antd";
 import type { MenuProps } from "antd";
 import {
 	LaptopOutlined,
@@ -10,11 +10,6 @@ import {
 function LayoutHome({ children }: { children: ReactNode }) {
 	const { Header, Content, Sider } = Layout;
 	const [collapsed, setCollapsed] = useState<boolean>(false);
-
-	const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-		key,
-		label: `nav ${key}`,
-	}));
 
 	const items2: MenuProps["items"] = [
 		UserOutlined,
