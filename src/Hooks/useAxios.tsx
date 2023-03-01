@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { TOKENOFTUKAN, BMX_TOKEN } from "Utils";
 
 function useAxios<T>(url: string) {
 	const [data, setData] = useState<T>();
@@ -10,23 +11,23 @@ function useAxios<T>(url: string) {
 		const fetchData = async (): Promise<void> => {
 			try {
 				setLoading(true);
-				let headersList = {
-					AccessControlAllowOrigin: "*/*", // permitir solicitudes CORS desde cualquier origen
-					Authorization:
-						"01f04831044f073702d9244604d41c055e7c14bb96218e169926482fb5699788",
-					"Bmx-Token":
-						"07cca3ed89476a61b43719abc500b5f4cf5ef87dee8994c41bb121728ca06068",
+				const headers = {
+					Accept: "*/*",
+					Authorization: TOKENOFTUKAN,
+				};
+				const params = {
+					token: BMX_TOKEN,
 				};
 
-				let reqOptions = {
-					url: "https://5i8qcjp333.execute-api.us-east-1.amazonaws.com/dev/series/SF43771",
-					method: "GET",
-					headers: headersList,
-				};
-
-				let response = await axios.request(reqOptions);
-				console.log(response.data);
-				setData(response.data.data);
+				const response = await axios.get(
+					`https://5i8qcjp333.execute-api.us-east-1.amazonaws.com/dev/series/${url}`,
+					{ headers, params }
+				);
+				const newData = url.length
+					? response.data.bmx.series
+					: response.data.data;
+				console.log("newData", newData);
+				setData(newData);
 			} catch (error: any) {
 				setError(error);
 			} finally {

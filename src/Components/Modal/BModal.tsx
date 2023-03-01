@@ -36,14 +36,20 @@ function BModal({
 }: {
 	setIsModalOpen: (value: boolean) => void;
 }) {
-	const { dataDashboard, setChartType, resetDataDashboard, setLanguageType } =
-		useDashboard();
+	const {
+		dataDashboard,
+		setChartType,
+		resetDataDashboard,
+		setLanguageType,
+		setSector,
+		setColorPicker,
+		setDatePicker,
+	} = useDashboard();
 
 	const [optionsSectores, setoptionsSectores] = useState<OptionsSectoresType[]>(
 		[]
 	);
 	const [titleModal, setTitleModal] = useState("Nuevo sector");
-	const [colorPicker, setColorPicker] = useState<string>("");
 	const { RangePicker } = DatePicker;
 	const { data } = useAxios<dataSectores[]>("");
 
@@ -72,17 +78,6 @@ function BModal({
 		}
 	}, [data, dataDashboard.language]);
 
-	const onRangeChange = (
-		dates: null | (Dayjs | null)[],
-		dateStrings: string[]
-	) => {
-		if (dates) {
-			console.log("From: ", dates[0], ", to: ", dates[1]);
-			console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
-		} else {
-			console.log("Clear");
-		}
-	};
 	function disabledEndDate(current: Dayjs) {
 		return current && current >= dayjs().endOf("day");
 	}
@@ -163,6 +158,7 @@ function BModal({
 							.localeCompare((optionB?.label ?? "").toLowerCase())
 					}
 					options={optionsSectores}
+					onChange={(e) => setSector(e)}
 				/>
 				Tabla o Grafica
 				<Select
@@ -248,7 +244,7 @@ function BModal({
 							/>
 							<div
 								style={{
-									backgroundColor: `${colorPicker}`,
+									backgroundColor: `${dataDashboard.graficOptions?.color}`,
 									height: 60,
 									width: 60,
 									marginLeft: 10,
@@ -262,7 +258,7 @@ function BModal({
 					// defaultValue={dayjs("01/01/2015", dateFormatList[0])}
 					style={{ width: "80%" }}
 					format={dateFormatList}
-					onChange={onRangeChange}
+					onChange={setDatePicker}
 					disabledDate={disabledEndDate}
 				/>
 			</Space>

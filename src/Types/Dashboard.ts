@@ -12,27 +12,30 @@ export enum LanguageEnum {
 }
 export type LanguageType = LanguageEnum;
 
-export enum DateFormatType {
-	"LL",
-	"L",
+export enum DateFormatEnum {
+	YYYY_MM_DD = "DD/MM/YYYY",
+	DD_MM_YYYY = "DD-MM-YYYY",
+	DD_MM_YY = "DD/MM/YY",
 }
+
 export type TableOptionsType = {
-	decimals: number;
-	dateFormat: DateFormatType;
+	decimals?: number;
+	dateFormat?: DateFormatEnum;
 };
 export type GraficConfigType = {
-	color: string;
-	type: GraficEnum;
+	color?: string;
+	type?: GraficEnum;
 };
 export type DashboardType = {
 	id: number;
 	chartType: ChartEnum | undefined;
-	startDate: Date;
-	endDate: Date;
+	startDate: string | undefined;
+	endDate: string | undefined;
 	title: string;
 	language: string;
 	tableOptions?: TableOptionsType;
 	graficOptions?: GraficConfigType;
+	sector: string;
 };
 
 export type dataSectores = {
