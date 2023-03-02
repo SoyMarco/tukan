@@ -3,35 +3,41 @@ export enum ChartEnum {
 	GRAFIC = "Grafica",
 }
 export enum GraficEnum {
-	LINE = "Lineas",
-	BAR = "Barrras",
+	LINE = "Linea",
+	COLUMN = "Columna",
+	AREA = "Area",
 }
 export enum LanguageEnum {
 	ESPAÑOL = "Español",
 	ENGLISH = "English",
 }
-export type LanguageType = LanguageEnum;
 
 export enum DateFormatEnum {
 	YYYY_MM_DD = "DD/MM/YYYY",
 	DD_MM_YYYY = "DD-MM-YYYY",
 	DD_MM_YY = "DD/MM/YY",
 }
-
+export enum DecimalsEnum {
+	"sinCeros" = 0,
+	"dosCeros" = 2,
+}
 export type TableOptionsType = {
-	decimals?: number;
+	decimals?: DecimalsEnum;
 	dateFormat?: DateFormatEnum;
 };
 export type GraficConfigType = {
 	color?: string;
 	type?: GraficEnum;
 };
-export type DashboardType = {
-	id: number;
-	chartType: ChartEnum | undefined;
+export type DatesType = {
 	startDate: string | undefined;
 	endDate: string | undefined;
-	title: string;
+};
+export type ChartSettingsType = {
+	id: number;
+	titleModal: string;
+	chartType: ChartEnum;
+	dates: DatesType;
 	language: string;
 	tableOptions?: TableOptionsType;
 	graficOptions?: GraficConfigType;
@@ -47,7 +53,24 @@ export type dataSectores = {
 export type Sector = {
 	sectores: dataSectores[];
 };
-export type OptionsSectoresType = {
+export type OptionsSelectType = {
 	value: string;
 	label: string;
+};
+
+export interface ChartTypePops {
+	chartSettings: ChartSettingsType;
+	updateChartSettings: <T extends keyof ChartSettingsType>(
+		prop: T,
+		value: ChartSettingsType[T]
+	) => void;
+}
+export type DataChart = {
+	fecha: string;
+	dato?: string;
+	datoN?: number;
+};
+export type ChartType = {
+	settings: ChartSettingsType;
+	data: DataChart[];
 };
