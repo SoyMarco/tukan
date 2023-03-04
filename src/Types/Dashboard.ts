@@ -38,7 +38,7 @@ export type DatesType = {
 	endDate: string | undefined;
 };
 export type ChartSettingsType = {
-	id: number;
+	id: string;
 	titleModal: string;
 	chartType: ChartEnum;
 	dates: DatesType;
@@ -82,7 +82,7 @@ export type UseDashboardType = UseNewChart & {
 	dataDashboards: ChartType[];
 	createChart: (chart: ChartType) => void;
 	readChart: (chart: ChartType) => void;
-	deleteChart: (id: number) => void;
+	deleteChart: (id: string) => void;
 	updateChart: (chart: ChartType) => void;
 	createDashboard: (charts: ChartType[]) => void;
 };

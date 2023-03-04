@@ -1,14 +1,15 @@
 import { useContext, useEffect, useMemo } from "react";
 import OptionsByChartType from "Components/Modal/Options/OptionsByChartType";
 import ContextDashboard from "Context/Dashboard/ContextDashboard";
-import BSelect from "Components/AntD/BSelect";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import type { Dayjs } from "dayjs";
-import dayjs from "dayjs";
 import { Modal, DatePicker, Space, Button, Input } from "antd";
 import { optionsChartsType, optionsLanguageType } from "Utils";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import { ActionModalEnum, ChartEnum } from "Types/Dashboard";
+import BSelect from "Components/AntD/BSelect";
 import useAxios from "Hooks/useAxios";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+
 dayjs.extend(customParseFormat);
 
 function ChartEditorModal() {
@@ -29,6 +30,11 @@ function ChartEditorModal() {
 		updatesSectorsData(settingsModal.language);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [settingsModal.language]);
+
+	useEffect(() => {
+		handleChangeSector(settingsModal.sector);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [optionsSectors]);
 
 	const disabledEndDates = (current: Dayjs) => {
 		return current && current >= dayjs().endOf("day");

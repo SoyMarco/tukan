@@ -5,6 +5,7 @@ import {
 	LanguageEnum,
 } from "Types/Dashboard";
 import dayjs from "dayjs";
+import html2canvas from "html2canvas";
 
 export const pressOnlyNumbers = (e: React.KeyboardEvent<HTMLInputElement>) => {
 	if (!/\d/.test(e.key)) {
@@ -48,9 +49,43 @@ export const transformDataChart = (
 		};
 	});
 
-const pasarStringANumero = (dato: string): number => {
+export const pasarStringANumero = (dato: string): number => {
 	const strSinComa = dato.replace(",", "");
 	const strSinComaYPunto = strSinComa.replace(".", "");
 	const num = parseFloat(strSinComaYPunto);
 	return num;
+};
+
+export const selectID = (input: string) => {
+	const inputHTML = (document.getElementById(input) as HTMLInputElement)!;
+	inputHTML.select();
+};
+
+export const downloadImage = (id: string, title: string) => {
+	const image = document.getElementById(id.toString());
+	if (!image) return;
+	hideBtns();
+
+	html2canvas(image).then((canvas) => {
+		const image = canvas.toDataURL("image/png");
+		const link = document.createElement("a");
+		link.download = title;
+		link.href = image;
+		link.click();
+	});
+	showButtons();
+};
+
+export const hideBtns = () => {
+	const buttons = document.getElementsByTagName("button");
+	for (const element of buttons) {
+		element.style.display = "none";
+	}
+};
+
+export const showButtons = () => {
+	const buttons = document.getElementsByTagName("button");
+	for (const element of buttons) {
+		element.style.display = "inline-block";
+	}
 };

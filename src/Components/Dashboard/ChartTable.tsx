@@ -22,7 +22,7 @@ function ChartTable({ data, settings }: ChartType) {
 			dataSource={data}
 			bordered
 			size='small'
-			scroll={{ y: "250px" }}
+			scroll={{ y: "200px" }}
 		/>
 	);
 }

@@ -4,7 +4,7 @@ import { ChartType, GraficEnum } from "Types/Dashboard";
 function ChartGrafics({ data, settings }: ChartType) {
 	const config = {
 		data: data,
-		height: 400,
+		height: 300,
 		xField: "fecha",
 		yField: "datoN",
 		color: settings.graficOptions?.color,

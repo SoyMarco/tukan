@@ -41,7 +41,7 @@ function useDashboard(): UseDashboardType {
 		closeModal();
 	};
 	//DELETE
-	const deleteChart = (id: number) => {
+	const deleteChart = (id: string) => {
 		const newDataCharts = dataDashboards.filter(
 			(dataChart) => dataChart.settings.id !== id
 		);

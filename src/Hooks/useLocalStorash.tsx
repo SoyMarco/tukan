@@ -69,6 +69,7 @@ function useLocalStorash() {
 	const handleAcceptSaveStorage = () => {
 		localStorage.setItem("openModal", "false");
 		setIsOpenModal(false);
+		window.location.reload();
 	};
 	return {
 		setIsOpenModal,

@@ -18,7 +18,7 @@ function useChartEditor(): UseNewChart {
 	};
 
 	const resetSettingsModal = useCallback(() => {
-		const id = new Date().getTime();
+		const id = new Date().getTime().toString();
 		setSettingsModal({ ...initialDataDashboard, id });
 	}, []);
 

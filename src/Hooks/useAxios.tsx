@@ -70,6 +70,7 @@ function useAxios() {
 						const updatedCharts = {
 							settings: settingsModal,
 							data: transformedData,
+							id: settingsModal.id,
 						};
 						return updatedCharts;
 					}
