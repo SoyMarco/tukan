@@ -25,7 +25,7 @@ function App() {
 				</>
 			) : (
 				<LayoutHome>
-					<Home></Home>
+					<Home />
 				</LayoutHome>
 			)}
 		</>

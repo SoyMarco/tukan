@@ -1,55 +1,115 @@
-import { useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import { TOKENOFTUKAN, BMX_TOKEN, urlBMX, urlTUKAN } from "Utils";
-import { DatesType } from "Types/Dashboard";
+import { useState, useCallback } from "react";
+import axios, { AxiosResponse } from "axios";
+import { notification } from "antd";
+import {
+	TOKENOFTUKAN,
+	BMX_TOKEN,
+	URL_TUKAN,
+	customArrayLanguage,
+	transformDataChart,
+} from "Utils";
+import {
+	ChartSettingsType,
+	ChartType,
+	DataSectorsType,
+	DecimalsEnum,
+	LanguageEnum,
+	OptionsSelectType,
+} from "Types/Dashboard";
 
-function useAxios<T>(seriesID: string, isChart = false, dates?: DatesType) {
-	const [data, setData] = useState<T>();
+function useAxios() {
+	const [dataSectors, setDataSectors] = useState<DataSectorsType[]>();
+
+	const [optionsSectors, setOptionsSectors] = useState<OptionsSelectType[]>([]);
+
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	const fetchData = useCallback(async (): Promise<void> => {
-		console.log("useAxios", seriesID, isChart, dates);
-		if (loading) return;
-
-		try {
-			setLoading(true);
+	const fetchData = useCallback(
+		async (
+			URL: string,
+			sinCeros?: DecimalsEnum
+		): Promise<AxiosResponse | undefined> => {
+			if (loading) return;
 			const headers = {
 				Accept: "*/*",
-				Authorization: isChart ? null : TOKENOFTUKAN,
+				Authorization: TOKENOFTUKAN,
 			};
 			const params = {
-				decimales: "sinCeros",
 				token: BMX_TOKEN,
+				decimales: sinCeros === DecimalsEnum.sinCeros ? "sinCeros" : null,
 			};
-
-			const URL = isChart
-				? `${urlBMX}${seriesID}/datos/${dates?.startDate}/${dates?.endDate}`
-				: `${urlTUKAN}`;
-
-			if ((isChart && seriesID.length > 0) || (!isChart && !seriesID)) {
-				const response = await axios.get(URL, { headers, params });
-				const newData = seriesID.length
-					? response.data.bmx.series[0].datos
-					: response.data.data;
-
-				setData(newData);
+			try {
+				setLoading(true);
+				return await axios.get(URL, { headers, params });
+			} catch (error: any) {
+				setError(error);
+			} finally {
+				setLoading(false);
 			}
-			// para debuggear
-			// console.log("newData", newData);
-		} catch (error: any) {
-			setError(error);
-		} finally {
-			setLoading(false);
-		}
-	}, [seriesID, isChart, dates, loading]);
+		},
+		[loading]
+	);
 
-	useEffect(() => {
-		fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const updateChartData = useCallback(
+		async (
+			settingsModal: ChartSettingsType
+		): Promise<ChartType | undefined> => {
+			const { dates, sector, tableOptions } = settingsModal;
+			const sinCeros = tableOptions?.decimals;
+			const URL_CUSTOM = `${URL_TUKAN}${sector}/${dates?.startDate}/${dates?.endDate}`;
+			const response = await fetchData(URL_CUSTOM, sinCeros);
+			try {
+				if (response?.data?.bmx) {
+					const transformedData = transformDataChart(
+						response?.data.bmx?.series[0]?.datos,
+						tableOptions?.dateFormat
+					);
 
-	return { data, loading, error, fetchData };
+					if (transformedData.length > 0) {
+						const updatedCharts = {
+							settings: settingsModal,
+							data: transformedData,
+						};
+						return updatedCharts;
+					}
+				}
+			} catch (error) {
+				notification["warning"]({
+					message: "No se encontraron datos para la fecha seleccionada",
+				});
+			}
+			return undefined;
+		},
+		[fetchData]
+	);
+
+	const updatesSectorsData = useCallback(
+		async (language: LanguageEnum): Promise<void> => {
+			if (dataSectors) {
+				const dataSectores = customArrayLanguage(language, dataSectors);
+				setOptionsSectors(dataSectores);
+				return;
+			}
+
+			const response = await fetchData(URL_TUKAN);
+			if (response?.data?.data) {
+				const sectores = response.data.data;
+				const dataSectores = customArrayLanguage(language, sectores);
+				setDataSectors(sectores);
+				setOptionsSectors(dataSectores);
+			}
+		},
+		[dataSectors, fetchData]
+	);
+
+	return {
+		optionsSectors,
+		loading,
+		error,
+		updatesSectorsData,
+		updateChartData,
+	};
 }
 
 export default useAxios;

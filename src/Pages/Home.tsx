@@ -1,37 +1,30 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { Affix, Button } from "antd";
-import BModal from "Components/Modal/BModal";
+import ChartEditorModal from "Components/Modal/ChartEditorModal";
 import Dashboard from "Components/Dashboard/Dashboard";
-import useCharts from "Hooks/useCharts";
 import { AreaChartOutlined } from "@ant-design/icons";
-const icons = [<AreaChartOutlined />];
+import { ContextDashboard } from "Context/Dashboard/ContextDashboard";
+import SaveStorageModal from "Components/Modal/SaveStorageModal";
 
 function Home() {
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-	const { dataCharts, addChart, removeChart } = useCharts();
-	const showModal = () => {
-		setIsModalOpen(true);
-	};
+	const { openModal, isModalOpen } = useContext(ContextDashboard);
 
 	return (
 		<>
 			<Affix offsetTop={10}>
 				<Button
 					type='primary'
-					onClick={showModal}
-					icon={icons[0]}
+					onClick={() => openModal()}
+					icon={<AreaChartOutlined />}
 					size='large'
 					style={{ fontSize: "20px", fontWeight: "bold", margin: 15 }}
 				>
 					Agregar visualización +
 				</Button>
 			</Affix>
-			{<Dashboard dataCharts={dataCharts} removeChart={removeChart} />}
-
-			{isModalOpen && (
-				<BModal setIsModalOpen={setIsModalOpen} addChart={addChart} />
-			)}
+			<Dashboard />
+			<SaveStorageModal></SaveStorageModal>
+			{isModalOpen && <ChartEditorModal />}
 		</>
 	);
 }

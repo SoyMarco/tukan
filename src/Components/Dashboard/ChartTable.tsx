@@ -11,8 +11,8 @@ function ChartTable({ data, settings }: ChartType) {
 		},
 		{
 			title: "dato",
-			dataIndex: "dato",
-			key: "dato",
+			dataIndex: "datoN",
+			key: "datoN",
 		},
 	];
 

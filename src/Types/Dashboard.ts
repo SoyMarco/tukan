@@ -2,6 +2,10 @@ export enum ChartEnum {
 	TABLE = "Tabla",
 	GRAFIC = "Grafica",
 }
+export enum ActionModalEnum {
+	CREATE = "Crear",
+	UPDATE = "Actualizar",
+}
 export enum GraficEnum {
 	LINE = "Linea",
 	COLUMN = "Columna",
@@ -13,13 +17,13 @@ export enum LanguageEnum {
 }
 
 export enum DateFormatEnum {
-	YYYY_MM_DD = "DD/MM/YYYY",
-	DD_MM_YYYY = "DD-MM-YYYY",
+	YYYY_MM_DD = "YYYY-MM-DD",
+	YY_MM_DD = "YY-MM-DD",
 	DD_MM_YY = "DD/MM/YY",
 }
 export enum DecimalsEnum {
-	"sinCeros" = 0,
-	"dosCeros" = 2,
+	"sinCeros" = "Sin Ceros",
+	"dosCeros" = "Con Ceros",
 }
 export type TableOptionsType = {
 	decimals?: DecimalsEnum;
@@ -38,20 +42,22 @@ export type ChartSettingsType = {
 	titleModal: string;
 	chartType: ChartEnum;
 	dates: DatesType;
-	language: string;
+	language: LanguageEnum;
 	tableOptions?: TableOptionsType;
 	graficOptions?: GraficConfigType;
 	sector: string;
+	nameSector: string;
+	action: ActionModalEnum;
 };
 
-export type dataSectores = {
+export type DataSectorsType = {
 	display_name: string;
 	display_name_en: string;
 	unit_id: string;
 	variable: string;
 };
 export type Sector = {
-	sectores: dataSectores[];
+	sectores: DataSectorsType[];
 };
 export type OptionsSelectType = {
 	value: string;
@@ -59,11 +65,8 @@ export type OptionsSelectType = {
 };
 
 export interface ChartTypePops {
-	chartSettings: ChartSettingsType;
-	updateChartSettings: <T extends keyof ChartSettingsType>(
-		prop: T,
-		value: ChartSettingsType[T]
-	) => void;
+	settingsModal: ChartSettingsType;
+	updateSettingsModal: (value: Partial<ChartSettingsType>) => void;
 }
 export type DataChart = {
 	fecha: string;
@@ -73,4 +76,30 @@ export type DataChart = {
 export type ChartType = {
 	settings: ChartSettingsType;
 	data: DataChart[];
+};
+
+export type UseDashboardType = UseNewChart & {
+	dataDashboards: ChartType[];
+	createChart: (chart: ChartType) => void;
+	readChart: (chart: ChartType) => void;
+	deleteChart: (id: number) => void;
+	updateChart: (chart: ChartType) => void;
+	createDashboard: (charts: ChartType[]) => void;
+};
+
+export type UseNewChart = {
+	settingsModal: ChartSettingsType;
+	updateSettingsModal: (value: Partial<ChartSettingsType>) => void;
+	openModal: () => void;
+	isModalOpen: boolean;
+	closeModal: () => void;
+};
+
+export type ContextDashboardType = UseDashboardType;
+
+export type UseLocalStorashType = {
+	setIsOpenModal: (value: boolean) => void;
+	isOpenModal: boolean;
+	deleteStoragereloadWindow: () => void;
+	handleAcceptSaveStorage: () => void;
 };
