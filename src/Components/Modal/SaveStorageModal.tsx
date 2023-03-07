@@ -1,5 +1,5 @@
 import { Button, Modal } from "antd";
-import useLocalStorash from "Hooks/useLocalStorash";
+import useLocalStorash from "Hooks/useLocalStorash/useLocalStorash";
 
 function SaveStorageModal() {
 	const {

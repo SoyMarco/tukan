@@ -7,3 +7,28 @@
 	box-shadow: 10px 6px 20px 5px #8b8b8b, -6px 0px 20px #ffffff;
 	width: 95%;
 }
+
+.btn_dowload {
+	color: #006b76;
+}
+.btn_dowload:hover {
+	background-color: #006b76;
+	color: white !important;
+}
+
+.btn_edit {
+	color: #ffba00;
+	margin: 0px 5px;
+}
+.btn_edit:hover {
+	background-color: #ffba00;
+	color: white !important;
+}
+
+.btn_delete {
+	color: #ff4d4f;
+}
+.btn_delete:hover {
+	background-color: #ff4d4f;
+	color: white !important;
+}

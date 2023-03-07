@@ -1,7 +1,7 @@
 import { useMemo, ReactNode } from "react";
 import ContextDashboard from "./ContextDashboard";
-import useDashboard from "Hooks/useDashboard";
-import useLocalStorash from "Hooks/useLocalStorash";
+import useDashboard from "Hooks/useDashboard/useDashboard";
+import useLocalStorash from "Hooks/useLocalStorash/useLocalStorash";
 
 export default function StateDashboard({ children }: { children: ReactNode }) {
 	const allUseDashboard = useDashboard();

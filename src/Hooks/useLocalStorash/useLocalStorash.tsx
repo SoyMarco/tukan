@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import ContextDashboard from "Context/Dashboard/ContextDashboard";
 import { ChartType } from "Types/Dashboard";
 
@@ -21,27 +21,24 @@ function useLocalStorash() {
 	//CREATE
 	useEffect(() => {
 		const existCharts = dataDashboards.length > 0;
-		console.log("existCharts", existCharts, dataDashboards);
 		if (existCharts) updateLocalStorage();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dataDashboards]);
 
 	//READ
 	const readLocalStorage = (): ChartType[] => {
-		const myArrayJSON = localStorage.getItem("myArray");
-		if (!myArrayJSON) return [];
-		const myArrayObj: ChartType[] = myArrayJSON
-			? JSON.parse(myArrayJSON)
+		const chartDataJSON = localStorage.getItem("myArray");
+		if (!chartDataJSON) return [];
+		const chartDataObj: ChartType[] = chartDataJSON
+			? JSON.parse(chartDataJSON)
 			: null;
-
-		return myArrayObj;
+		return chartDataObj;
 	};
 
 	//UPDATE
-	const updateLocalStorage = () => {
-		console.log("updateLocalStorage", dataDashboards);
+	const updateLocalStorage = useCallback(() => {
 		localStorage.setItem("myArray", JSON.stringify(dataDashboards));
-	};
+	}, [dataDashboards]);
 
 	//DELETE
 	const deleteLocalStorage = () => {
@@ -50,10 +47,9 @@ function useLocalStorash() {
 
 	///////////////////////
 
-	const beforeUnload = (event: BeforeUnloadEvent) => {
+	const beforeUnload = (event: BeforeUnloadEvent): void => {
 		const existCharts = readLocalStorage().length > 0;
 		const showModalStorage = localStorage.getItem("openModal");
-		console.log("beforeUnload", existCharts, showModalStorage);
 
 		if (!existCharts || showModalStorage) return;
 		event.preventDefault();

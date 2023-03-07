@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import ContextDashboard from "Context/Dashboard/ContextDashboard";
-import ChartGrafics from "Components/Dashboard/ChartGrafics";
-import ChartTable from "Components/Dashboard/ChartTable";
+import ChartGrafics from "Components/Dashboard/Charts/ChartGrafics";
+import ChartTable from "Components/Dashboard/Charts/ChartTable";
 import { ChartEnum } from "Types/Dashboard";
 import { downloadImage } from "Utils";
 import { Row, Button } from "antd";
@@ -21,29 +21,22 @@ function ChartCard({ chart }: { chart: any }) {
 		<div className='div_ChartCard'>
 			<Row justify='end' key={`${id}Row`}>
 				<Button
-					key={`${id}borrar`}
 					icon={<DeleteOutlined />}
-					type='primary'
-					danger
+					className='btn_delete'
 					onClick={() => deleteChart(id)}
 				>
 					Borrar
 				</Button>
 				<Button
-					key={`${id}editar`}
-					style={{ backgroundColor: "#ffba00", margin: " 0 5px" }}
 					icon={<EditOutlined />}
-					type='primary'
+					className='btn_edit'
 					onClick={() => readChart(chart)}
 				>
 					Editar
 				</Button>
 				<Button
-					style={{
-						backgroundColor: "#006b76",
-					}}
 					icon={<DownloadOutlined />}
-					type='primary'
+					className='btn_dowload'
 					onClick={() => downloadImage(`${id}content`, titleModal)}
 				>
 					Descargar

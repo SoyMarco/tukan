@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { ActionModalEnum, ChartType, UseDashboardType } from "Types/Dashboard";
-import useChartEditor from "Hooks/useChartEditor";
+import useSettingsModal from "Hooks/useSettingsModal/useSettingsModal";
 
 function useDashboard(): UseDashboardType {
 	const [dataDashboards, setdataDashboards] = useState<ChartType[]>([]);
@@ -11,11 +11,8 @@ function useDashboard(): UseDashboardType {
 		isModalOpen,
 		openModal,
 		closeModal,
-	} = useChartEditor();
+	} = useSettingsModal();
 
-	useEffect(() => {
-		console.log("dataDashboards@@@@@", dataDashboards);
-	}, [dataDashboards]);
 	//CREATE
 	const createChart = useCallback(
 		(chart: ChartType) => {

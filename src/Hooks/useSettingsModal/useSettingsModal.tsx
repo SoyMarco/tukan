@@ -2,15 +2,11 @@ import { useState, useCallback } from "react";
 import type { ChartSettingsType, UseNewChart } from "Types/Dashboard";
 import { initialDataDashboard } from "Utils";
 
-function useChartEditor(): UseNewChart {
+function useSettingsModal(): UseNewChart {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 	const [settingsModal, setSettingsModal] =
 		useState<ChartSettingsType>(initialDataDashboard);
-	// console.log("settingsModal@@", settingsModal); boorrar esto
-	// useEffect(() => {
-	// 	console.log("settingsModal@@", settingsModal);
-	// }, [settingsModal]);
 
 	const updateSettingsModal = (value: Partial<ChartSettingsType>) => {
 		const updatedData = { ...settingsModal, ...value };
@@ -40,4 +36,4 @@ function useChartEditor(): UseNewChart {
 	};
 }
 
-export default useChartEditor;
+export default useSettingsModal;
