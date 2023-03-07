@@ -1,0 +1,9 @@
+.div_ChartCard:hover {
+	background-color: #b6caf95e;
+	cursor: pointer;
+}
+
+.div_ChartCard {
+	box-shadow: 10px 6px 20px 5px #8b8b8b, -6px 0px 20px #ffffff;
+	width: 95%;
+}

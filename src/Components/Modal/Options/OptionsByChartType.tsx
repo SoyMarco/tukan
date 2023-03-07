@@ -6,7 +6,7 @@ import {
 	DecimalsEnum,
 } from "Types/Dashboard";
 import { GithubPicker } from "react-color";
-import BSelect from "Components/AntD/BSelect";
+import BSelect from "Components/AntD/BSelect/BSelect";
 import { Space } from "antd";
 import {
 	optionsFormatDate,
@@ -50,6 +50,9 @@ function OptionsByChartType({
 						<div
 							style={{
 								backgroundColor: `${settingsModal.graficOptions?.color}`,
+								border: `${
+									settingsModal.graficOptions?.color ? "" : "red 1px solid"
+								}`,
 								height: 60,
 								width: 60,
 								marginLeft: 10,

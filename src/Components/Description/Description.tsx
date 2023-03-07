@@ -1,27 +1,18 @@
+import { DotChartOutlined } from "@ant-design/icons";
 import tukanPNG from "Assets/tukan.png";
 import { Skeleton, Space } from "antd";
-import { DotChartOutlined } from "@ant-design/icons";
+import "./Description.css";
 
 function Description() {
 	return (
-		<div
-			style={{
-				height: "100vh",
-				width: "100%",
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				textAlign: "center",
-				backgroundColor: "#eceded",
-			}}
-		>
+		<div className='description'>
 			<div>
-				<img src={tukanPNG} alt='Tukan' style={{ width: 600 }} />
+				<img src={tukanPNG} alt='Tukan' className='img_description' />
 				<p>
 					Bienvenido al sistema para visualizar tablas y graficas de la base de
 					datos de Banxico.
 				</p>
-				<p> Sistema creado por Marco para Tukan.</p>
+				<p> Sistema creado por Marco Antonio Salazar Ramirez para Tukan.</p>
 				<Skeleton active />
 				<Space>
 					<Skeleton.Node active>

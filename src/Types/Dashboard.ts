@@ -103,3 +103,16 @@ export type UseLocalStorashType = {
 	deleteStoragereloadWindow: () => void;
 	handleAcceptSaveStorage: () => void;
 };
+
+export interface OptionType<T = string> {
+	value: T;
+	label: T;
+}
+
+export interface BSelectProps<T = string> {
+	placeholder: string;
+	options?: OptionType[];
+	onChange?: (value: T) => void;
+	value?: T;
+	loading?: boolean;
+}

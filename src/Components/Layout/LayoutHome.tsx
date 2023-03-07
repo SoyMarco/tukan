@@ -17,7 +17,6 @@ function LayoutHome({ children }: { children: ReactNode }) {
 					style={{
 						padding: 10,
 						margin: 5,
-						minHeight: 280,
 						background: "white",
 					}}
 				>

@@ -1,0 +1,13 @@
+.description {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #eceded;
+	text-align: center;
+}
+
+.img_description {
+	width: 500px;
+}

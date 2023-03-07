@@ -5,7 +5,7 @@ import { Modal, DatePicker, Space, Button, Input } from "antd";
 import { optionsChartsType, optionsLanguageType } from "Utils";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { ActionModalEnum, ChartEnum } from "Types/Dashboard";
-import BSelect from "Components/AntD/BSelect";
+import BSelect from "Components/AntD/BSelect/BSelect";
 import useAxios from "Hooks/useAxios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -19,6 +19,7 @@ function ChartEditorModal() {
 		settingsModal,
 		updateSettingsModal,
 		updateChart,
+		isModalOpen,
 	} = useContext(ContextDashboard);
 
 	const { RangePicker } = DatePicker;
@@ -105,10 +106,11 @@ function ChartEditorModal() {
 		[settingsModal?.tableOptions?.dateFormat]
 	);
 	const [startDate, endDate] = datesModal;
+
 	return (
 		<Modal
 			title={`Titulo: ${settingsModal.titleModal}`}
-			open={true}
+			open={isModalOpen}
 			onOk={handleOk}
 			onCancel={closeModal}
 			footer={[
