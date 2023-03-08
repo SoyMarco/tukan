@@ -20,6 +20,7 @@ function ChartTable({ data, settings }: ChartType) {
 		<Table
 			columns={columns}
 			dataSource={data}
+			rowKey={(record) => `${record.fecha}${record.datoN}`}
 			bordered
 			size='small'
 			scroll={{ y: "200px" }}

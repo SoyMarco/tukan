@@ -16,6 +16,7 @@ function BSelect<T = string>(props: BSelectProps<T>) {
 			style={{ width: "100%" }}
 			status={value ? undefined : "error"}
 			optionFilterProp='children'
+			placement='bottomLeft'
 			placeholder={placeholder}
 			onChange={onChange}
 			loading={loading}

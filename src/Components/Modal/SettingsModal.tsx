@@ -1,18 +1,22 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useCallback } from "react";
 import OptionsByChartType from "Components/Modal/Options/OptionsByChartType";
 import ContextDashboard from "Context/Dashboard/ContextDashboard";
 import { Modal, DatePicker, Space, Button, Input } from "antd";
-import { optionsChartsType, optionsLanguageType } from "Utils";
+import {
+	customArrayLanguage,
+	optionsChartsType,
+	optionsLanguageType,
+} from "Utils";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { ActionModalEnum, ChartEnum } from "Types/Dashboard";
+import { ActionModalEnum, ChartEnum, LanguageEnum } from "Types/Dashboard";
 import BSelect from "Components/AntD/BSelect/BSelect";
-import useAxios from "Hooks/useAxios";
+import useAxios from "Hooks/useAxios/useAxios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 
 dayjs.extend(customParseFormat);
 
-function ChartEditorModal() {
+function SettingsModal() {
 	const {
 		closeModal,
 		createChart,
@@ -24,11 +28,17 @@ function ChartEditorModal() {
 
 	const { RangePicker } = DatePicker;
 
-	const { optionsSectors, loading, updatesSectorsData, updateChartData } =
-		useAxios();
+	const {
+		optionsSectors,
+		loading,
+		adatperDataSectors,
+		adatperDataChart,
+		dataSectors,
+		setOptionsSectors,
+	} = useAxios();
 
 	useEffect(() => {
-		updatesSectorsData(settingsModal.language);
+		adatperDataSectors(settingsModal.language);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [settingsModal.language]);
 
@@ -71,7 +81,7 @@ function ChartEditorModal() {
 	}, [settingsModal]);
 
 	const handleOk = async () => {
-		const updatedCharts = await updateChartData(settingsModal);
+		const updatedCharts = await adatperDataChart(settingsModal);
 		if (!updatedCharts) return;
 
 		if (settingsModal.action === ActionModalEnum.CREATE) {
@@ -107,6 +117,32 @@ function ChartEditorModal() {
 	);
 	const [startDate, endDate] = datesModal;
 
+	const changeLanguage = useCallback(
+		(value: string) => {
+			const newLanguage: LanguageEnum =
+				value === "Español" ? LanguageEnum.ESPAÑOL : LanguageEnum.ENGLISH;
+			const currentSector = optionsSectors.find(
+				(sector) => sector.value === settingsModal.sector
+			);
+
+			if (!currentSector || !value || !dataSectors) return;
+			const dataSectores = customArrayLanguage(newLanguage, dataSectors);
+
+			setOptionsSectors(dataSectores);
+			updateSettingsModal({
+				nameSector: currentSector.label,
+				sector: currentSector.value,
+				language: newLanguage,
+			});
+		},
+		[
+			dataSectors,
+			optionsSectors,
+			setOptionsSectors,
+			settingsModal.sector,
+			updateSettingsModal,
+		]
+	);
 	return (
 		<Modal
 			title={`Titulo: ${settingsModal.titleModal}`}
@@ -141,7 +177,7 @@ function ChartEditorModal() {
 					placeholder='Selecciona el idioma'
 					options={optionsLanguageType}
 					value={settingsModal.language}
-					onChange={(value) => updateSettingsModal({ language: value })}
+					onChange={(value) => changeLanguage(value)}
 				/>
 				Sector
 				<BSelect
@@ -177,4 +213,4 @@ function ChartEditorModal() {
 	);
 }
 
-export default ChartEditorModal;
+export default SettingsModal;

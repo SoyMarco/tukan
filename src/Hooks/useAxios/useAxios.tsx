@@ -1,47 +1,31 @@
 import { useState, useCallback } from "react";
-import axios, { AxiosResponse } from "axios";
+import { getDataBanxico, getSeriesCatalog } from "Service/services";
+import { customArrayLanguage, transformDataChart } from "Utils";
+import { AxiosResponse } from "axios";
 import { notification } from "antd";
-import {
-	TOKENOFTUKAN,
-	BMX_TOKEN,
-	URL_TUKAN,
-	customArrayLanguage,
-	transformDataChart,
-} from "Utils";
 import {
 	ChartSettingsType,
 	ChartType,
 	DataSectorsType,
-	DecimalsEnum,
 	LanguageEnum,
 	OptionsSelectType,
 } from "Types/Dashboard";
 
 function useAxios() {
 	const [dataSectors, setDataSectors] = useState<DataSectorsType[]>();
-
 	const [optionsSectors, setOptionsSectors] = useState<OptionsSelectType[]>([]);
-
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	const fetchData = useCallback(
+	const requestData = useCallback(
 		async (
-			URL: string,
-			sinCeros?: DecimalsEnum
+			request: (params: any) => Promise<AxiosResponse | undefined>,
+			params?: any
 		): Promise<AxiosResponse | undefined> => {
 			if (loading) return;
-			const headers = {
-				Accept: "*/*",
-				Authorization: TOKENOFTUKAN,
-			};
-			const params = {
-				token: BMX_TOKEN,
-				decimales: sinCeros === DecimalsEnum.sinCeros ? "sinCeros" : null,
-			};
 			try {
 				setLoading(true);
-				return await axios.get(URL, { headers, params });
+				return await request(params);
 			} catch (error: any) {
 				setError(error);
 			} finally {
@@ -51,14 +35,12 @@ function useAxios() {
 		[loading]
 	);
 
-	const updateChartData = useCallback(
+	const adatperDataChart = useCallback(
 		async (
 			settingsModal: ChartSettingsType
 		): Promise<ChartType | undefined> => {
-			const { dates, sector, tableOptions } = settingsModal;
-			const sinCeros = tableOptions?.decimals;
-			const URL_CUSTOM = `${URL_TUKAN}${sector}/${dates?.startDate}/${dates?.endDate}`;
-			const response = await fetchData(URL_CUSTOM, sinCeros);
+			const { tableOptions } = settingsModal;
+			const response = await requestData(getDataBanxico, settingsModal);
 			try {
 				if (response?.data?.bmx) {
 					const transformedData = transformDataChart(
@@ -82,18 +64,19 @@ function useAxios() {
 			}
 			return undefined;
 		},
-		[fetchData]
+		[requestData]
 	);
 
-	const updatesSectorsData = useCallback(
-		async (language: LanguageEnum): Promise<void> => {
-			if (dataSectors) {
-				const dataSectores = customArrayLanguage(language, dataSectors);
-				setOptionsSectors(dataSectores);
-				return;
-			}
+	const adatperDataSectors = useCallback(
+		async (language: LanguageEnum) => {
+			// esta en pruebas
+			// if (dataSectors) {
+			// 	const dataSectores = customArrayLanguage(language, dataSectors);
+			// 	setOptionsSectors(dataSectores);
+			// 	return;
+			// }
 
-			const response = await fetchData(URL_TUKAN);
+			const response = await requestData(getSeriesCatalog);
 			if (response?.data?.data) {
 				const sectores = response.data.data;
 				const dataSectores = customArrayLanguage(language, sectores);
@@ -101,15 +84,17 @@ function useAxios() {
 				setOptionsSectors(dataSectores);
 			}
 		},
-		[dataSectors, fetchData]
+		[requestData]
 	);
 
 	return {
 		optionsSectors,
 		loading,
 		error,
-		updatesSectorsData,
-		updateChartData,
+		adatperDataSectors,
+		adatperDataChart,
+		dataSectors,
+		setOptionsSectors,
 	};
 }
 

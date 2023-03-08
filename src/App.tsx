@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import Description from "Components/Description/Description";
 import LayoutHome from "./Components/Layout/LayoutHome";
-import Home from "./Pages/Home";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import StateDashboard from "Context/Dashboard/StateDashboard";
 
 function App() {
 	const [showDescription, setShowDescription] = useState(true);
@@ -21,7 +22,9 @@ function App() {
 				<Description />
 			) : (
 				<LayoutHome>
-					<Home />
+					<StateDashboard>
+						<Dashboard />
+					</StateDashboard>
 				</LayoutHome>
 			)}
 		</>
