@@ -2,7 +2,7 @@ import { Select } from "antd";
 import { BSelectProps } from "Types/Dashboard";
 
 function BSelect<T = string>(props: BSelectProps<T>) {
-	const { placeholder, options, onChange, value, loading } = props;
+	const { placeholder, options, onChange, value, loading, placement } = props;
 	return (
 		<Select
 			filterOption={(input, option) =>
@@ -16,7 +16,7 @@ function BSelect<T = string>(props: BSelectProps<T>) {
 			style={{ width: "100%" }}
 			status={value ? undefined : "error"}
 			optionFilterProp='children'
-			placement='bottomLeft'
+			placement={placement}
 			placeholder={placeholder}
 			onChange={onChange}
 			loading={loading}

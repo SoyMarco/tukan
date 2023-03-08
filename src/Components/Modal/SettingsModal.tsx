@@ -182,6 +182,7 @@ function SettingsModal() {
 				Sector
 				<BSelect
 					placeholder='Selecciona un sector'
+					placement='topLeft'
 					loading={loading}
 					options={optionsSectors}
 					value={settingsModal.sector}

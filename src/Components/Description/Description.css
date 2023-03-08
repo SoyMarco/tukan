@@ -1,6 +1,6 @@
 .description {
 	height: 100vh;
-	width: 100%;
+	width: 100vw;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -9,5 +9,6 @@
 }
 
 .img_description {
-	width: 500px;
+	width: 80vw;
+	max-width: 500px;
 }

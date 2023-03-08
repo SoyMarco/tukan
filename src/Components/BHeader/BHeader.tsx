@@ -13,7 +13,7 @@ function BHeader() {
 				src={tukanPNG}
 				alt='Tukan'
 				style={{
-					width: 130,
+					maxWidth: 130,
 					color: "white",
 					filter: "grayscale(1) contrast(0.5) brightness(3.5)",
 				}}

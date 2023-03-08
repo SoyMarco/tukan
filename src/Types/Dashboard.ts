@@ -111,6 +111,7 @@ export interface OptionType<T = string> {
 
 export interface BSelectProps<T = string> {
 	placeholder: string;
+	placement?: "bottomLeft" | "bottomRight" | "topLeft" | "topRight";
 	options?: OptionType[];
 	onChange?: (value: T) => void;
 	value?: T;

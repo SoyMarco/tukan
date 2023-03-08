@@ -19,7 +19,7 @@ function ChartCard({ chart }: { chart: any }) {
 
 	return (
 		<div className='div_ChartCard'>
-			<Row justify='end' key={`${id}Row`}>
+			<Row justify='end'>
 				<Button
 					icon={<DeleteOutlined />}
 					className='btn_delete'
@@ -44,14 +44,12 @@ function ChartCard({ chart }: { chart: any }) {
 			</Row>
 			<div id={`${id}content`}>
 				<h3 style={{ marginTop: 0 }}>Titulo: {titleModal}</h3>
-				<h4 key={`${id}h4`} style={{ margin: 0 }}>
-					Sector: {nameSector}
-				</h4>
+				<h4 style={{ margin: 0 }}>Sector: {nameSector}</h4>
 				{chartType === ChartEnum.TABLE && (
-					<ChartTable key={`${id}Table`} data={data} settings={settings} />
+					<ChartTable data={data} settings={settings} />
 				)}
 				{chartType === ChartEnum.GRAFIC && (
-					<ChartGrafics key={`${id}Grafic`} data={data} settings={settings} />
+					<ChartGrafics data={data} settings={settings} />
 				)}
 			</div>
 		</div>
