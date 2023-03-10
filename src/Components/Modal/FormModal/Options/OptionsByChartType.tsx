@@ -14,32 +14,29 @@ import {
 	optionsNumeroDecimales,
 } from "Utils";
 
-function OptionsByChartType({
-	settingsModal,
-	updateSettingsModal,
-}: ChartTypePops) {
+function OptionsByChartType({ formModal, updateSettingsModal }: ChartTypePops) {
 	const handleChangeColor = (color: string) => {
 		updateSettingsModal({
 			graficOptions: {
 				color,
-				type: settingsModal.graficOptions?.type,
+				type: formModal.graficOptions?.type,
 			},
 		});
 	};
 	return (
 		<Space direction='vertical' style={{ width: "100%", paddingLeft: 30 }}>
-			{settingsModal.chartType === ChartEnum.GRAFIC && (
+			{formModal.chartType === ChartEnum.GRAFIC && (
 				<>
 					Tipo de grafica
 					<BSelect
 						placeholder='Selecciona tipo de grafica'
 						options={optionsTypesGrafic}
-						value={settingsModal.graficOptions?.type}
+						value={formModal.graficOptions?.type}
 						onChange={(value: GraficEnum) =>
 							updateSettingsModal({
 								graficOptions: {
 									type: value,
-									color: settingsModal.graficOptions?.color,
+									color: formModal.graficOptions?.color,
 								},
 							})
 						}
@@ -49,9 +46,9 @@ function OptionsByChartType({
 						<GithubPicker onChangeComplete={(e) => handleChangeColor(e.hex)} />
 						<div
 							style={{
-								backgroundColor: `${settingsModal.graficOptions?.color}`,
+								backgroundColor: `${formModal.graficOptions?.color}`,
 								border: `${
-									settingsModal.graficOptions?.color ? "" : "red 1px solid"
+									formModal.graficOptions?.color ? "" : "red 1px solid"
 								}`,
 								height: 60,
 								width: 60,
@@ -61,18 +58,18 @@ function OptionsByChartType({
 					</div>
 				</>
 			)}
-			{settingsModal.chartType === ChartEnum.TABLE && (
+			{formModal.chartType === ChartEnum.TABLE && (
 				<>
 					Numero de decimales
 					<BSelect
 						placeholder='Selecciona numero de decimales'
 						options={optionsNumeroDecimales}
-						value={settingsModal.tableOptions?.decimals}
+						value={formModal.tableOptions?.decimals}
 						onChange={(value: DecimalsEnum) =>
 							updateSettingsModal({
 								tableOptions: {
 									decimals: value,
-									dateFormat: settingsModal?.tableOptions?.dateFormat,
+									dateFormat: formModal?.tableOptions?.dateFormat,
 								},
 							})
 						}
@@ -81,11 +78,11 @@ function OptionsByChartType({
 					<BSelect
 						placeholder='Selecciona tabla o grafico'
 						options={optionsFormatDate}
-						value={settingsModal.tableOptions?.dateFormat}
+						value={formModal.tableOptions?.dateFormat}
 						onChange={(value: DateFormatEnum) =>
 							updateSettingsModal({
 								tableOptions: {
-									decimals: settingsModal?.tableOptions?.decimals,
+									decimals: formModal?.tableOptions?.decimals,
 									dateFormat: value,
 								},
 							})

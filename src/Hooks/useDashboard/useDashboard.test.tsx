@@ -19,7 +19,7 @@ describe("useDashboard", () => {
 			result.current.readChart(dataChart);
 		});
 
-		expect(result.current.settingsModal).toEqual({
+		expect(result.current.formModal).toEqual({
 			...dataChart.settings,
 			action: ActionModalEnum.UPDATE,
 		});

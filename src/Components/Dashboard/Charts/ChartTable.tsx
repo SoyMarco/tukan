@@ -1,8 +1,8 @@
-import { Table } from "antd";
-import { ColumnsType } from "antd/es/table";
 import { ChartType, DataChart } from "Types/Dashboard";
+import { ColumnsType } from "antd/es/table";
+import { Table } from "antd";
 
-function ChartTable({ data, settings }: ChartType) {
+function ChartTable({ data }: ChartType) {
 	const columns: ColumnsType<DataChart> = [
 		{
 			title: "Fecha",
@@ -18,12 +18,12 @@ function ChartTable({ data, settings }: ChartType) {
 
 	return (
 		<Table
+			rowKey={({ fecha, datoN }) => `${fecha}${datoN}`}
+			scroll={{ y: "200px" }}
 			columns={columns}
 			dataSource={data}
-			rowKey={(record) => `${record.fecha}${record.datoN}`}
-			bordered
 			size='small'
-			scroll={{ y: "200px" }}
+			bordered
 		/>
 	);
 }

@@ -1,17 +1,18 @@
 import { useState, useCallback } from "react";
-import { ActionModalEnum, ChartType, UseDashboardType } from "Types/Dashboard";
-import useSettingsModal from "Hooks/useSettingsModal/useSettingsModal";
+import useFormModal from "Hooks/useFormModal/useFormModal";
+import { initialDataFormModal } from "Utils";
+import {
+	ActionModalEnum,
+	ChartSettingsType,
+	ChartType,
+	UseDashboardType,
+} from "Types/Dashboard";
 
-function useDashboard(): UseDashboardType {
+function useDashboard(): UseDashboardType<ChartSettingsType> {
 	const [dataDashboards, setdataDashboards] = useState<ChartType[]>([]);
 
-	const {
-		settingsModal,
-		updateSettingsModal,
-		isModalOpen,
-		openModal,
-		closeModal,
-	} = useSettingsModal();
+	const { formModal, updateSettingsModal, isModalOpen, openModal, closeModal } =
+		useFormModal<ChartSettingsType>(initialDataFormModal);
 
 	//CREATE
 	const createChart = useCallback(
@@ -44,22 +45,24 @@ function useDashboard(): UseDashboardType {
 		);
 		setdataDashboards(newDataCharts);
 	};
-	//CREATE
+
+	//CREATE DASHBOARD
 	const createDashboard = (charts: ChartType[]) => {
 		setdataDashboards(charts);
 	};
+
 	return {
-		dataDashboards,
+		updateSettingsModal,
+		createDashboard,
 		createChart,
-		readChart,
 		updateChart,
 		deleteChart,
-		settingsModal,
-		updateSettingsModal,
-		isModalOpen,
-		openModal,
 		closeModal,
-		createDashboard,
+		readChart,
+		openModal,
+		dataDashboards,
+		isModalOpen,
+		formModal,
 	};
 }
 

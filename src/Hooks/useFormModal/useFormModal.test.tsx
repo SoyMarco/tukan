@@ -1,10 +1,13 @@
-import useSettingsModal from "./useSettingsModal";
+import useFormModal from "./useFormModal";
 import { renderHook, act } from "@testing-library/react-hooks";
-import { LanguageEnum } from "Types/Dashboard";
+import { ChartSettingsType, LanguageEnum } from "Types/Dashboard";
+import { initialDataFormModal } from "Utils";
 
-describe("useNewChart hook", () => {
+describe("UseFormModalType hook", () => {
 	it("should update chart settings modal", () => {
-		const { result } = renderHook(() => useSettingsModal());
+		const { result } = renderHook(() =>
+			useFormModal<ChartSettingsType>(initialDataFormModal)
+		);
 
 		act(() => {
 			result.current.updateSettingsModal({
@@ -13,12 +16,14 @@ describe("useNewChart hook", () => {
 			});
 		});
 
-		expect(result.current.settingsModal.titleModal).toEqual("New Title");
-		expect(result.current.settingsModal.language).toEqual(LanguageEnum.ENGLISH);
+		expect(result.current.formModal.titleModal).toEqual("New Title");
+		expect(result.current.formModal.language).toEqual(LanguageEnum.ENGLISH);
 	});
 
 	it("should open and close modal", () => {
-		const { result } = renderHook(() => useSettingsModal());
+		const { result } = renderHook(() =>
+			useFormModal<ChartSettingsType>(initialDataFormModal)
+		);
 
 		expect(result.current.isModalOpen).toBeFalsy();
 

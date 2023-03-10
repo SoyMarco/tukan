@@ -17,9 +17,9 @@ export const getSeriesCatalog = async (): Promise<
 };
 
 export const getDataBanxico = async (
-	settingsModal: ChartSettingsType
+	formModal: ChartSettingsType
 ): Promise<AxiosResponse | undefined> => {
-	const { dates, sector, tableOptions } = settingsModal;
+	const { dates, sector, tableOptions } = formModal;
 	const sinCeros = tableOptions?.decimals;
 	const params = {
 		token: BMX_TOKEN,

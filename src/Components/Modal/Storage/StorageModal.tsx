@@ -1,13 +1,13 @@
 import { Button, Modal } from "antd";
-import useLocalStorash from "Hooks/useLocalStorash/useLocalStorash";
+import useControllerStorage from "Components/Modal/Storage/useControllerStorage";
 
-function SaveStorageModal() {
+function StorageModal() {
 	const {
-		setIsOpenModal,
-		isOpenModal,
 		deleteStoragereloadWindow,
 		handleAcceptSaveStorage,
-	} = useLocalStorash();
+		setIsOpenModal,
+		isOpenModal,
+	} = useControllerStorage();
 
 	return (
 		<Modal
@@ -43,4 +43,4 @@ function SaveStorageModal() {
 	);
 }
 
-export default SaveStorageModal;
+export default StorageModal;

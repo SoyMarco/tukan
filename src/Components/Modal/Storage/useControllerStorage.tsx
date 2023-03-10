@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, useCallback } from "react";
 import ContextDashboard from "Context/Dashboard/ContextDashboard";
 import { ChartType } from "Types/Dashboard";
 
-function useLocalStorash() {
+function useControllerStorage() {
 	const { dataDashboards, createDashboard } = useContext(ContextDashboard);
 
 	const [isOpenModal, setIsOpenModal] = useState(false);
@@ -46,7 +46,6 @@ function useLocalStorash() {
 	};
 
 	///////////////////////
-
 	const beforeUnload = (event: BeforeUnloadEvent): void => {
 		const existCharts = readLocalStorage().length > 0;
 		const showModalStorage = localStorage.getItem("openModal");
@@ -67,12 +66,13 @@ function useLocalStorash() {
 		setIsOpenModal(false);
 		window.location.reload();
 	};
+
 	return {
-		setIsOpenModal,
-		isOpenModal,
 		deleteStoragereloadWindow,
 		handleAcceptSaveStorage,
+		setIsOpenModal,
+		isOpenModal,
 	};
 }
 
-export default useLocalStorash;
+export default useControllerStorage;

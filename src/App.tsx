@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Description from "Components/Description/Description";
+import Description from "Pages/Description/Description";
 import LayoutHome from "./Components/Layout/LayoutHome";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import StateDashboard from "Context/Dashboard/StateDashboard";

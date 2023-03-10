@@ -32,3 +32,10 @@
 	background-color: #ff4d4f;
 	color: white !important;
 }
+
+.div_ChartCard > div > h3 {
+	margin-top: 0px;
+}
+.div_ChartCard > div > h4 {
+	margin: 5px;
+}

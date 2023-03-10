@@ -2,7 +2,7 @@ import { useContext } from "react";
 import ContextDashboard from "Context/Dashboard/ContextDashboard";
 import ChartGrafics from "Components/Dashboard/Charts/ChartGrafics";
 import ChartTable from "Components/Dashboard/Charts/ChartTable";
-import { ChartEnum } from "Types/Dashboard";
+import { ChartEnum, ChartType } from "Types/Dashboard";
 import { downloadImage } from "Utils";
 import { Row, Button } from "antd";
 import {
@@ -12,10 +12,11 @@ import {
 } from "@ant-design/icons";
 import "./ChartCard.css";
 
-function ChartCard({ chart }: { chart: any }) {
+function ChartCard({ chart }: { chart: ChartType }) {
+	const { deleteChart, readChart } = useContext(ContextDashboard);
+
 	const { settings, data } = chart;
 	const { id, titleModal, nameSector, chartType } = settings;
-	const { deleteChart, readChart } = useContext(ContextDashboard);
 
 	return (
 		<div className='div_ChartCard'>
@@ -43,8 +44,9 @@ function ChartCard({ chart }: { chart: any }) {
 				</Button>
 			</Row>
 			<div id={`${id}content`}>
-				<h3 style={{ marginTop: 0 }}>Titulo: {titleModal}</h3>
-				<h4 style={{ margin: 0 }}>Sector: {nameSector}</h4>
+				<h3>Titulo: {titleModal}</h3>
+				<h4>Sector: {nameSector}</h4>
+
 				{chartType === ChartEnum.TABLE && (
 					<ChartTable data={data} settings={settings} />
 				)}

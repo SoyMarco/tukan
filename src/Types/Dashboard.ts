@@ -65,7 +65,7 @@ export type OptionsSelectType = {
 };
 
 export interface ChartTypePops {
-	settingsModal: ChartSettingsType;
+	formModal: ChartSettingsType;
 	updateSettingsModal: (value: Partial<ChartSettingsType>) => void;
 }
 export type DataChart = {
@@ -78,7 +78,9 @@ export type ChartType = {
 	data: DataChart[];
 };
 
-export type UseDashboardType = UseNewChart & {
+export type ContextDashboardType<T> = UseDashboardType<T>;
+
+export type UseDashboardType<T> = UseFormModalType<T> & {
 	dataDashboards: ChartType[];
 	createChart: (chart: ChartType) => void;
 	readChart: (chart: ChartType) => void;
@@ -87,15 +89,13 @@ export type UseDashboardType = UseNewChart & {
 	createDashboard: (charts: ChartType[]) => void;
 };
 
-export type UseNewChart = {
-	settingsModal: ChartSettingsType;
-	updateSettingsModal: (value: Partial<ChartSettingsType>) => void;
+export type UseFormModalType<T> = {
+	formModal: T;
+	updateSettingsModal: (value: Partial<T>) => void;
 	openModal: () => void;
 	isModalOpen: boolean;
 	closeModal: () => void;
 };
-
-export type ContextDashboardType = UseDashboardType;
 
 export type UseLocalStorashType = {
 	setIsOpenModal: (value: boolean) => void;

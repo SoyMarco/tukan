@@ -1,14 +1,16 @@
 import { createContext } from "react";
-import { ContextDashboardType } from "Types/Dashboard";
-import { initialDataDashboard } from "Utils";
+import { ChartSettingsType, ContextDashboardType } from "Types/Dashboard";
+import { initialDataFormModal } from "Utils";
 
-export const ContextDashboard = createContext<ContextDashboardType>({
+export const ContextDashboard = createContext<
+	ContextDashboardType<ChartSettingsType>
+>({
 	dataDashboards: [],
 	createChart: () => {},
 	readChart: () => {},
 	updateChart: () => {},
 	deleteChart: () => {},
-	settingsModal: initialDataDashboard,
+	formModal: initialDataFormModal,
 	updateSettingsModal: () => {},
 	isModalOpen: false,
 	openModal: () => {},

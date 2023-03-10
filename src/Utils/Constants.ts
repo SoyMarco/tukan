@@ -49,7 +49,7 @@ export const dateFormatList = [
 
 const today = dayjs().format("YYYY-MM-DD");
 const twentyDaysAgo = dayjs().subtract(1, "month").format("YYYY-MM-DD");
-export const initialDataDashboard = {
+export const initialDataFormModal = {
 	id: new Date().getTime().toString(),
 	titleModal: "Nuevo sector",
 	chartType: ChartEnum.TABLE,
